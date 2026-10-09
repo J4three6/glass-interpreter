@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>GlassInterpreter-Setup</AssemblyName>
+    <ApplicationIcon>Glass.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="host.py" LogicalName="Assets.host.py" />
+    <EmbeddedResource Include="vm.pyw" LogicalName="Assets.vm.pyw" />
+    <EmbeddedResource Include="send_caption.py" LogicalName="Assets.send_caption.py" />
+    <EmbeddedResource Include="Glass.ico" LogicalName="Assets.Glass.ico" />
+  </ItemGroup>
+</Project>

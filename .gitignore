@@ -1,0 +1,10 @@
+bin/
+obj/
+publish/
+.venv/
+__pycache__/
+*.py[cod]
+Host/config_visor.json
+GlassInterpreter-Host.exe
+GlassInterpreter-VM-*.exe
+GlassInterpreter-Setup.exe
