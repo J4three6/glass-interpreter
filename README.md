@@ -34,6 +34,7 @@ La instalación usa Internet para descargar Python, LibreTranslate y modelos de 
 
 ## Licencias
 
-- El código de Glass Interpreter está bajo MIT; ver `LICENSE`.
+- El código de Glass Interpreter en la rama principal está bajo GNU GPL versión 3.0 solamente; ver `LICENSE`.
+- La Release `v0.1.0` se publicó bajo MIT. Este cambio no altera la licencia de esa Release ni de las copias publicadas anteriormente.
 - El icono `Glass.ico` se dedica al dominio público mediante CC0 1.0; ver `ICON-LICENSE.md`.
 - Las licencias de componentes de terceros son independientes y se mantienen con sus respectivos proyectos.
