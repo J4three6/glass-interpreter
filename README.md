@@ -1,40 +1,43 @@
 # Glass Interpreter
 
-Glass Interpreter muestra y traduce dos flujos de Windows 11 Subtítulos en vivo en una ventana de cuatro paneles.
+Esta versión, mucho más ligera, de Glass Interpreter sólo usa los subtítulos de Windows (en inglés) y los de Chrome (en español) y los traduce al idioma opuesto. Eliminando la necesidad de usar una máquina virtual. ¡Óptimo para correr en laptops sencillas!
 
-- En el Host, captura subtítulos en inglés y los traduce al español.
-- En la VM, captura subtítulos en español y envía el texto al Host por la red local; la VM no traduce.
-- LibreTranslate y los modelos inglés/español se ejecutan en el Host. La primera instalación requiere internet para descargar Python, las dependencias y los modelos.
-- El Host muestra el texto original y la traducción de ambos equipos. Los subtítulos no se envían a servicios externos.
-- `Ctrl` + rueda del ratón cambia el tamaño del texto. `Esc` cierra el visor. El clic derecho no lo cierra.
+La versión anterior, 0.1.0 , dependía de una máquina virtual como segunda fuente de subtítulos.
 
-## Instalación
+La preparación consiste en bajar el repositorio, ejecutar unas cuantas líneas en PowerShell, usar el instalador - `run_glass.ps1` y luego usar el icono del escritorio para ejecutar el programa (se cierra con la tecla Esc):
 
-1. En el Host, abre `GlassInterpreter-Setup.exe` y elige una carpeta de instalación.
-2. El asistente detecta la IPv4 del Host y genera dentro de `VM` un instalador configurado para esa dirección.
-3. Copia ese instalador a la VM, ejecútalo dentro de la VM y sigue los pasos.
-4. Abre Windows 11 Subtítulos en vivo en ambos equipos: inglés en el Host y español en la VM.
-5. Inicia cada parte con su acceso directo del Escritorio.
+1. Instala las herramientas necesarias desde PowerShell:
 
-Si Windows muestra una solicitud del firewall al iniciar el Host, permite el acceso en la red privada a la que se conecta la VM.
+   ```powershell
+   winget install --exact --id Python.Python.3.12
+   winget install --exact --id Git.Git
+   ```
 
-## Compilar el instalador
+2. Cierra y vuelve a abrir PowerShell. Descarga el repositorio (reemplaza `OWNER/REPO` con su URL real):
 
-Requisitos para compilar: Windows x64 y .NET 10 SDK.
+   ```powershell
+   git clone https://github.com/OWNER/REPO.git "$env:USERPROFILE\GlassInterpreter"
+   Set-Location "$env:USERPROFILE\GlassInterpreter"
+   ```
 
-```powershell
-dotnet publish GlassInstaller.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish
-```
+3. Instala LibreTranslate, la interfaz y los dos modelos Argos; se creará el acceso directo con el icono oficial:
 
-El ejecutable principal se puede publicar como activo de una Release de GitHub. Cada instalación Host genera el instalador VM correspondiente a su propia red; no publiques una copia VM con una IP personal.
+   ```powershell
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\install.ps1
+   ```
 
-## Privacidad y componentes de terceros
+La primera instalación descarga varios cientos de MB de dependencias y modelos y puede tardar. Después, abre **Glass Interpreter** desde el acceso directo del escritorio. No ejecutes `Glass_Interpreter.pyw` directamente: el acceso directo inicia el servidor local oculto, arranca la interfaz y al salir cierra únicamente el servidor iniciado por esa sesión.
 
-La instalación usa Internet para descargar Python, LibreTranslate y modelos de traducción. En funcionamiento, el Host traduce localmente y recibe de la VM el texto de subtítulos a través de la red local. Consulta las licencias de Python, LibreTranslate, Argos Translate y los modelos de idiomas antes de redistribuirlos por separado.
+Activa los subtítulos en vivo de Windows (en inglés) y Chrome (en español) antes de abrir Glass. Usa la tecla de **Escape** para cerrar la interfaz.
 
-## Licencias
+## Archivos
 
-- El código de Glass Interpreter en la rama principal está bajo GNU GPL versión 3.0 solamente; ver `LICENSE`.
-- La Release `v0.1.0` se publicó bajo MIT. Este cambio no altera la licencia de esa Release ni de las copias publicadas anteriormente.
-- El icono `Glass.ico` se dedica al dominio público mediante CC0 1.0; ver `ICON-LICENSE.md`.
-- Las licencias de componentes de terceros son independientes y se mantienen con sus respectivos proyectos.
+- `Glass_Interpreter.pyw`: interfaz de cuatro paneles.
+- `install.ps1`: crea un entorno Python local al repositorio, instala dependencias y modelos en `%LOCALAPPDATA%`, y crea el acceso directo.
+- `run_glass.ps1`: inicia LibreTranslate en un puerto loopback libre y lo detiene al cerrar Glass.
+- `requirements.txt`: dependencias Python con versiones validadas.
+
+## Licencias y publicación
+
+El código no incluye todavía una licencia del proyecto: hasta que se elija una, no se concede permiso de reutilización. El modelo Argos inglés-español descarga su paquete desde el índice Argos; el paquete no declara explícitamente una licencia del modelo ni los derechos de redistribución de todos sus corpus. No subas modelos ni un instalador autocontenido hasta resolverlo. Consulta `PUBLISHING.md` y `THIRD_PARTY_NOTICES.md`.
