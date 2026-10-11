@@ -16,7 +16,7 @@ La preparación consiste en bajar el repositorio, ejecutar unas cuantas líneas 
 2. Cierra y vuelve a abrir PowerShell. Descarga el repositorio (reemplaza `OWNER/REPO` con su URL real):
 
    ```powershell
-   git clone https://github.com/OWNER/REPO.git "$env:USERPROFILE\GlassInterpreter"
+   git clone https://github.com/J4three6/glass-interpreter.git "$env:USERPROFILE\GlassInterpreter"
    Set-Location "$env:USERPROFILE\GlassInterpreter"
    ```
 
