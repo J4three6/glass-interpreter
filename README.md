@@ -1,43 +1,53 @@
-# Glass Interpreter
+# Glass Interpreter v1.0.2 (versión semi portable)
 
-Esta versión, mucho más ligera, de Glass Interpreter sólo usa los subtítulos de Windows (en inglés) y los de Chrome (en español) y los traduce al idioma opuesto. Eliminando la necesidad de usar una máquina virtual. ¡Óptimo para correr en laptops sencillas!
+Traduce en tiempo real los subtítulos de **Windows Live Captions** (inglés) y de **Chrome Live Caption** (español) al idioma contrario, en una ventana propia de cuatro paneles.
 
-La versión anterior, 0.1.0 , dependía de una máquina virtual como segunda fuente de subtítulos.
 
-La preparación consiste en bajar el repositorio, ejecutar unas cuantas líneas en PowerShell, usar el instalador - `run_glass.ps1` y luego usar el icono del escritorio para ejecutar el programa (se cierra con la tecla Esc):
 
-1. Instala las herramientas necesarias desde PowerShell:
+Novedades
 
-   ```powershell
-   winget install --exact --id Python.Python.3.12
-   winget install --exact --id Git.Git
-   ```
+* **LibreTranslate se inicia y se cierra junto con Glass.** Ya no hace falta una tarea programada ni scripts que cierren Python a la fuerza: al salir de Glass (Esc) se detiene solo el servicio que Glass inició, con todos sus procesos hijos.
+* **Carpeta portable con rutas relativas.** Puede vivir en cualquier carpeta donde Windows permita escribir.
+* **Instalador `install.ps1`:** crea un entorno virtual (`.venv`), instala las dependencias, descarga los modelos en→es y es→en y crea el acceso directo en el escritorio.
+* **Timer flotante incluido** (`timer\_flotante.pyw`), opcional e independiente de la traducción.
+* `Reiniciar\_Glass.vbs` reinicia todo limpio y abre Glass y el timer.
 
-2. Cierra y vuelve a abrir PowerShell. Descarga el repositorio (reemplaza `OWNER/REPO` con su URL real):
+## Requisitos
 
-   ```powershell
-   git clone https://github.com/J4three6/glass-interpreter.git "$env:USERPROFILE\GlassInterpreter"
-   Set-Location "$env:USERPROFILE\GlassInterpreter"
-   ```
+* Windows 11 con Live Captions (Windows) y Live Caption (Chrome) activados.
+* Python 3.12.
+* Conexión a internet durante la instalación (aproximadamente 300 MB entre dependencias y modelos).
 
-3. Instala LibreTranslate, la interfaz y los dos modelos Argos; se creará el acceso directo con el icono oficial:
+## Instalación
 
-   ```powershell
-   Set-ExecutionPolicy -Scope Process Bypass
-   .\install.ps1
-   ```
+Ejecuta desde PowerShell:
 
-La primera instalación descarga varios cientos de MB de dependencias y modelos y puede tardar. Después, abre **Glass Interpreter** desde el acceso directo del escritorio. No ejecutes `Glass_Interpreter.pyw` directamente: el acceso directo inicia el servidor local oculto, arranca la interfaz y al salir cierra únicamente el servidor iniciado por esa sesión.
+```powershell
+winget install --exact --id Python.Python.3.12
+```
 
-Activa los subtítulos en vivo de Windows (en inglés) y Chrome (en español) antes de abrir Glass. Usa la tecla de **Escape** para cerrar la interfaz.
+Cierra y vuelve a abrir PowerShell, descomprime el zip y, dentro de la carpeta (clic derecho en un espacio vacío de la carpeta > Abrir en Terminal):
 
-## Archivos
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\\install.ps1
+```
 
-- `Glass_Interpreter.pyw`: interfaz de cuatro paneles.
-- `install.ps1`: crea un entorno Python local al repositorio, instala dependencias y modelos en `%LOCALAPPDATA%`, y crea el acceso directo.
-- `run_glass.ps1`: inicia LibreTranslate en un puerto loopback libre y lo detiene al cerrar Glass.
-- `requirements.txt`: dependencias Python con versiones validadas.
+Después abre **Glass Interpreter** desde el escritorio. Activa antes los subtítulos de Windows (inglés) y de Chrome (español). Esc cierra cada ventana.
 
-## Licencias y publicación
+## Notas
 
-El código no incluye todavía una licencia del proyecto: hasta que se elija una, no se concede permiso de reutilización. El modelo Argos inglés-español descarga su paquete desde el índice Argos; el paquete no declara explícitamente una licencia del modelo ni los derechos de redistribución de todos sus corpus. No subas modelos ni un instalador autocontenido hasta resolverlo. Consulta `PUBLISHING.md` y `THIRD_PARTY_NOTICES.md`.
+* Los modelos de traducción **no se incluyen** en este paquete: se descargan durante la instalación desde el índice de Argos Translate y se guardan en el perfil del usuario.
+* LibreTranslate se instala como dependencia externa y se ejecuta como proceso aparte.
+* Glass escucha solo en `127.0.0.1:5000`. Si ese puerto ya está ocupado por otro LibreTranslate, Glass lo reutiliza pero no lo cierra al salir.
+* Si cierras Glass de forma forzada (por ejemplo, desde el Administrador de tareas), el servicio puede quedar activo; `Reiniciar\_Glass.vbs` lo limpia al volver a abrir.
+* Se incluye kill\_python.vbs como extra por si llegase a ser necesario. Cuidado: Este detiene todos los procesos de Python en la PC, no sólo los de Glass.
+
+## Cambios respecto a la versión anterior (0.1.0)
+
+* La 0.1.0 dependía de una máquina virtual como segunda fuente de subtítulos; esta versión usa solo Windows (inglés) y Chrome (español).
+
+## Licencia
+
+GPL-3.0. Consulta `LICENSE`.
+
