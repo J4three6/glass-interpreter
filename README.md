@@ -6,7 +6,7 @@ Traduce en tiempo real los subtítulos de **Windows Live Captions** (inglés) y 
 
 Novedades
 
-* **LibreTranslate se inicia y se cierra junto con Glass.** Ya no hace falta una tarea programada ni scripts que cierren Python a la fuerza: al salir de Glass (Esc) se detiene solo el servicio que Glass inició, con todos sus procesos hijos.
+* **LibreTranslate se inicia y se cierra de forma invisible junto con Glass.** Ya no hace falta una tarea programada ni scripts que cierren Python a la fuerza: al salir de Glass (Esc) se detiene solo el servicio que Glass inició, con todos sus procesos hijos.
 * **Carpeta portable con rutas relativas.** Puede vivir en cualquier carpeta donde Windows permita escribir.
 * **Instalador `install.ps1`:** crea un entorno virtual (`.venv`), instala las dependencias, descarga los modelos en→es y es→en y crea el acceso directo en el escritorio.
 * **Timer flotante incluido** (`timer\_flotante.pyw`), opcional e independiente de la traducción.
