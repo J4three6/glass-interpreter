@@ -1,0 +1,5 @@
+libretranslate
+uiautomation
+comtypes
+pycaw
+tzdata
