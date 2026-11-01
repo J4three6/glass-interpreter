@@ -1,7 +1,7 @@
 
 # Glass Interpreter
 
-Traduce en tiempo real los subtítulos de **Windows Live Captions (inglés)** y **Chrome Live Caption (español)**, convirtiendo cada uno al idioma opuesto en una ventana propia. Incluye un timer flotante opcional.
+Muestra y traduce en tiempo real los subtítulos de **Windows Live Captions (inglés)** y **Chrome Live Caption (español)**, convirtiendo cada uno al idioma opuesto en una ventana propia. Incluye un timer flotante opcional.
 
 ## INSTALACIÓN
 
